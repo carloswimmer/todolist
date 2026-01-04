@@ -30,4 +30,5 @@ build/
 !**/src/test/**/build/
 
 ### VS Code ###
-.vscode/
+# Commented out to versionate workspace settings
+# .vscode/ 

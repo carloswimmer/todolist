@@ -1,0 +1,22 @@
+{
+    "java.compile.nullAnalysis.mode": "automatic",
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "redhat.java",
+    "editor.codeActionsOnSave": {
+        // "source.fixAll.lombok": "explicit",
+        "source.organizeImports": "explicit"
+    },
+    "[json]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[jsonc]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[xml]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "redhat.vscode-xml"
+    }
+}
