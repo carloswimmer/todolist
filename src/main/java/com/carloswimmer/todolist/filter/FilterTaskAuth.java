@@ -44,7 +44,7 @@ public class FilterTaskAuth extends OncePerRequestFilter {
         String username = credentials[0];
         String password = credentials[1];
 
-        // Validate user exists
+        // Validate if user exists
         var user = userRepository.findByUsername(username);
 
         if (user == null) {
@@ -60,6 +60,8 @@ public class FilterTaskAuth extends OncePerRequestFilter {
             return;
         }
 
+        // Set user id in the request
+        request.setAttribute("idUser", user.getId());
         filterChain.doFilter(request, response);
 
     }
