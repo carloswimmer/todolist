@@ -24,7 +24,7 @@ public class UserController {
     public ResponseEntity<ApiResponse> create(@RequestBody UserModel userModel) {
         var user = userRepository.findByUsername(userModel.getUsername());
 
-        if (user.isPresent()) {
+        if (user != null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("User already exists"));
         }
 
