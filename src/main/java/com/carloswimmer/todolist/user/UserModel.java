@@ -5,8 +5,6 @@ import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import com.carloswimmer.todolist.ApiResponse;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,7 +13,7 @@ import lombok.Data;
 
 @Data
 @Entity(name = "tb_users")
-public class UserModel implements ApiResponse {
+public class UserModel {
 
     @Id
     @GeneratedValue(generator = "UUID")

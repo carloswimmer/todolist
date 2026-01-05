@@ -1,5 +1,11 @@
 package com.carloswimmer.todolist;
 
-public interface ApiResponse {
+public interface ApiResponse<T> {
+
+    T getData();
+
+    String getMessage();
+
+    boolean isSuccess();
 
 }

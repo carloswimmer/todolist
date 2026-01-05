@@ -4,10 +4,12 @@ import com.carloswimmer.todolist.ApiResponse;
 
 import lombok.Getter;
 
-public class ErrorResponse implements ApiResponse {
+@Getter
+public class ErrorResponse<T> implements ApiResponse<T> {
 
-    @Getter
-    private String message;
+    private final T data = null;
+    private final String message;
+    private final boolean success = false;
 
     public ErrorResponse(String message) {
         this.message = message;

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.carloswimmer.todolist.ApiResponse;
 import com.carloswimmer.todolist.dto.ErrorResponse;
+import com.carloswimmer.todolist.dto.SuccessResponse;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
@@ -21,17 +22,17 @@ public class UserController {
     private UserRepository userRepository;
 
     @PostMapping("/")
-    public ResponseEntity<ApiResponse> create(@RequestBody UserModel userModel) {
+    public ResponseEntity<ApiResponse<UserModel>> create(@RequestBody UserModel userModel) {
         var user = userRepository.findByUsername(userModel.getUsername());
 
         if (user != null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("User already exists"));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse<>("User already exists"));
         }
 
         var passwordHashed = BCrypt.withDefaults().hashToString(12, userModel.getPassword().toCharArray());
         userModel.setPassword(passwordHashed);
 
         var userCreated = userRepository.save(userModel);
-        return ResponseEntity.status(HttpStatus.CREATED).body(userCreated);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new SuccessResponse<>(userCreated));
     }
 }
