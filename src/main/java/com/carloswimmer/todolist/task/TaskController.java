@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.carloswimmer.todolist.ApiResponse;
 import com.carloswimmer.todolist.dto.ErrorResponse;
 import com.carloswimmer.todolist.dto.SuccessResponse;
+import com.carloswimmer.todolist.utils.ObjectMerger;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -59,15 +61,19 @@ public class TaskController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<TaskModel>> update(@RequestBody TaskModel taskModel, @PathVariable UUID id,
+    public ResponseEntity<ApiResponse<TaskModel>> update(@RequestBody @NonNull TaskModel taskModel,
+            @PathVariable @NonNull UUID id,
             HttpServletRequest request) {
 
-        var idUser = request.getAttribute("idUser");
+        var task = taskRepository.findById(id).orElse(null);
 
-        taskModel.setIdUser((UUID) idUser);
-        taskModel.setId(id);
+        if (task == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse<>("Task not found"));
+        }
 
-        var taskUpdated = taskRepository.save(taskModel);
+        ObjectMerger.merge(taskModel, task);
+
+        var taskUpdated = taskRepository.save(task);
         return ResponseEntity.status(HttpStatus.OK).body(new SuccessResponse<>(taskUpdated));
 
     }
