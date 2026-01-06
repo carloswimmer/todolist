@@ -106,6 +106,10 @@ To deploy your own version:
 2. Select "Web Service".
 3. Render will automatically detect the `Dockerfile` and build the application.
 
+## 📋 Future Improvements
+
+Detailed plans for architectural enhancements, new features, and technical debt are documented in the [TODOS.md](TODOS.md) file.
+
 ---
 Developed by [Carlos Wimmer](https://github.com/carloswimmer).
 
