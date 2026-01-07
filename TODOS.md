@@ -2,6 +2,7 @@
 
 ## Todo's
 
+[] Improve architecture
 [] Implement unit tests
 [] Implement real database (not in memory)
     [] check for best option (Relational/NonSQL)
@@ -16,3 +17,5 @@
 [] Change task property `priority` for ENUM
 [] Implement Auth
     [] Pass Auth as middleware
+    [] Check interceptors usage
+    [] Check Spring Security usage
