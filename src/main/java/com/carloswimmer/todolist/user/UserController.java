@@ -9,30 +9,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.carloswimmer.todolist.ApiResponse;
-import com.carloswimmer.todolist.dto.ErrorResponse;
 import com.carloswimmer.todolist.dto.SuccessResponse;
-
-import at.favre.lib.crypto.bcrypt.BCrypt;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @PostMapping("/")
     public ResponseEntity<ApiResponse<UserModel>> create(@RequestBody UserModel userModel) {
-        var user = userRepository.findByUsername(userModel.getUsername());
-
-        if (user != null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse<>("User already exists"));
-        }
-
-        var passwordHashed = BCrypt.withDefaults().hashToString(12, userModel.getPassword().toCharArray());
-        userModel.setPassword(passwordHashed);
-
-        var userCreated = userRepository.save(userModel);
+        var userCreated = userService.create(userModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(new SuccessResponse<>(userCreated));
     }
 }
