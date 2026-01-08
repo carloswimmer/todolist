@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.carloswimmer.todolist.ApiResponse;
 import com.carloswimmer.todolist.dto.ErrorResponse;
+import com.carloswimmer.todolist.exceptions.AccessDeniedException;
 import com.carloswimmer.todolist.exceptions.BusinessException;
+import com.carloswimmer.todolist.exceptions.EntityNotFoundException;
 
 @ControllerAdvice
 public class ExceptionHandlerAdvice {
@@ -31,4 +33,13 @@ public class ExceptionHandlerAdvice {
                 .body(new ErrorResponse<>("An unexpected error occurred"));
     }
 
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ApiResponse<String>> handleAccessDeniedException(AccessDeniedException exception) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new ErrorResponse<>(exception.getMessage()));
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<ApiResponse<String>> handleEntityNotFoundException(EntityNotFoundException exception) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse<>(exception.getMessage()));
+    }
 }
