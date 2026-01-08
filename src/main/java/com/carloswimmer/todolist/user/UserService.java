@@ -1,11 +1,13 @@
 package com.carloswimmer.todolist.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.carloswimmer.todolist.exceptions.UserAlreadyExistsException;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
+@Service
 public class UserService {
 
     @Autowired

@@ -8,9 +8,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.carloswimmer.todolist.ApiResponse;
-import com.carloswimmer.todolist.dto.SuccessResponse;
-
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -19,8 +16,9 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/")
-    public ResponseEntity<ApiResponse<UserModel>> create(@RequestBody UserModel userModel) {
+    public ResponseEntity<UserModel> create(@RequestBody UserModel userModel) {
         var userCreated = userService.create(userModel);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new SuccessResponse<>(userCreated));
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(userCreated);
     }
 }

@@ -14,9 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.carloswimmer.todolist.ApiResponse;
-import com.carloswimmer.todolist.dto.SuccessResponse;
-
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
@@ -27,30 +24,29 @@ public class TaskController {
     private TaskService taskService;
 
     @PostMapping("/")
-    public ResponseEntity<ApiResponse<TaskModel>> create(@RequestBody TaskModel taskModel, HttpServletRequest request) {
+    public ResponseEntity<TaskModel> create(@RequestBody TaskModel taskModel, HttpServletRequest request) {
         var idUser = (UUID) request.getAttribute("idUser");
         var taskCreated = taskService.create(taskModel, idUser);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(new SuccessResponse<>(taskCreated));
+        return ResponseEntity.status(HttpStatus.CREATED).body(taskCreated);
     }
 
     @GetMapping("/")
-    public ResponseEntity<ApiResponse<List<TaskModel>>> list(HttpServletRequest request) {
+    public ResponseEntity<List<TaskModel>> list(HttpServletRequest request) {
         var idUser = (UUID) request.getAttribute("idUser");
         var tasks = taskService.listByUser(idUser);
 
-        return ResponseEntity.status(HttpStatus.OK).body(new SuccessResponse<>(tasks));
-
+        return ResponseEntity.status(HttpStatus.OK).body(tasks);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<TaskModel>> update(@RequestBody TaskModel taskModel,
+    public ResponseEntity<TaskModel> update(@RequestBody TaskModel taskModel,
             @PathVariable UUID id,
             HttpServletRequest request) {
         var idUser = (UUID) request.getAttribute("idUser");
         var taskUpdated = taskService.update(taskModel, id, idUser);
 
-        return ResponseEntity.status(HttpStatus.OK).body(new SuccessResponse<>(taskUpdated));
+        return ResponseEntity.status(HttpStatus.OK).body(taskUpdated);
     }
 
 }

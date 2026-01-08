@@ -5,12 +5,14 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.carloswimmer.todolist.exceptions.AccessDeniedException;
 import com.carloswimmer.todolist.exceptions.EntityNotFoundException;
 import com.carloswimmer.todolist.exceptions.InvalidTaskDateException;
 import com.carloswimmer.todolist.utils.ObjectMerger;
 
+@Service
 public class TaskService {
     @Autowired
     private TaskRepository taskRepository;
