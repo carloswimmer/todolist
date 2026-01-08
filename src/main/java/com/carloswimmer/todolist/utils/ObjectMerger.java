@@ -7,16 +7,25 @@ import java.util.Set;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
-import org.springframework.lang.NonNull;
 
 public class ObjectMerger {
 
-    public static void merge(@NonNull Object source, @NonNull Object target) {
-        BeanUtils.copyProperties(source, target, getNullPropertyNames(source));
+    public static void merge(Object source, Object target) {
+        if (source == null || target == null) {
+            throw new IllegalArgumentException("Source and target cannot be null");
+        }
+
+        var nullPropertyNames = getNullPropertyNames(source);
+
+        if (nullPropertyNames != null && nullPropertyNames.length > 0) {
+            BeanUtils.copyProperties(source, target, nullPropertyNames);
+        }
     }
 
-    @NonNull
-    private static String[] getNullPropertyNames(@NonNull Object source) {
+    private static String[] getNullPropertyNames(Object source) {
+        if (source == null) {
+            throw new IllegalArgumentException("Source cannot be null");
+        }
 
         final BeanWrapper src = new BeanWrapperImpl(source);
         PropertyDescriptor[] properties = src.getPropertyDescriptors();
@@ -37,12 +46,6 @@ public class ObjectMerger {
             }
         }
 
-        String[] result = emptyNames.toArray(new String[0]);
-
-        if (result == null) {
-            return new String[0];
-        }
-
-        return result;
+        return emptyNames.toArray(new String[0]);
     }
 }
