@@ -4,6 +4,7 @@
 
 [] Improve architecture
 [] Implement unit tests
+    [] confirm Jacoco version
 [] Implement real database (not in memory)
     [] check for best option (Relational/NonSQL)
     [] run it in Docker
@@ -19,3 +20,4 @@
     [] Pass Auth as middleware
     [] Check interceptors usage
     [] Check Spring Security usage
+[] Check if create business rules are applied in update

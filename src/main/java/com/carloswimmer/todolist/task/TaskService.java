@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.carloswimmer.todolist.exceptions.AccessDeniedException;
+import com.carloswimmer.todolist.exceptions.BusinessException;
 import com.carloswimmer.todolist.exceptions.EntityNotFoundException;
 import com.carloswimmer.todolist.exceptions.InvalidTaskDateException;
 import com.carloswimmer.todolist.utils.ObjectMerger;
@@ -19,6 +20,10 @@ public class TaskService {
 
     public TaskModel create(TaskModel taskModel, UUID idUser) {
         var currentDate = LocalDateTime.now();
+
+        if (taskModel.getTitle().length() > 50) {
+            throw new BusinessException("The title must be less than 50 characters");
+        }
 
         if (currentDate.isAfter(taskModel.getStartAt()) || currentDate.isAfter(taskModel.getEndAt())) {
             throw new InvalidTaskDateException("The start date or end date must be greater than the current date");

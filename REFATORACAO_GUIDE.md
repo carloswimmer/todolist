@@ -30,7 +30,20 @@ Este guia servirá como roteiro para transformar sua aplicação atual em uma ar
 
 ---
 
-## Aula 3: Desacoplando o Banco de Dados (Repository Pattern)
+## Aula 3: Testes Unitários e Observabilidade
+**Objetivo:** Validar a lógica de negócio e medir a cobertura de testes do projeto.
+
+1.  **Observabilidade com Jacoco:**
+    *   Configurar o plugin Jacoco no `pom.xml` para gerar relatórios de cobertura em HTML.
+    *   Aprender a ler o relatório (linhas verdes vs linhas vermelhas).
+
+2.  **Testes de Serviço (Mockito):**
+    *   Criar testes para `TaskService` simulando o repositório com Mockito.
+    *   Garantir que as exceções (`BusinessException`) sejam lançadas corretamente em casos de erro.
+
+---
+
+## Aula 4: Desacoplando o Banco de Dados (Repository Pattern)
 **Objetivo:** Preparar a aplicação para trocar de banco de dados (ex: de H2/JPA para MongoDB ou JDBC puro) sem tocar na lógica de negócio.
 
 1.  **Definir Interfaces de Domínio:**
@@ -44,7 +57,7 @@ Este guia servirá como roteiro para transformar sua aplicação atual em uma ar
 
 ---
 
-## Aula 4: Autenticação Limpa (Middleware e AuthService)
+## Aula 5: Autenticação Limpa (Middleware e AuthService)
 **Objetivo:** Retirar a complexidade de segurança de dentro dos filtros e centralizar a lógica de autenticação.
 
 1.  **AuthService:**
@@ -55,7 +68,7 @@ Este guia servirá como roteiro para transformar sua aplicação atual em uma ar
 
 ---
 
-## Aula 5: DTOs (Data Transfer Objects) e Segurança
+## Aula 6: DTOs (Data Transfer Objects) e Segurança
 **Objetivo:** Proteger seus modelos de dados e controlar exatamente o que entra e sai da API.
 
 1.  **Request/Response DTOs:**
