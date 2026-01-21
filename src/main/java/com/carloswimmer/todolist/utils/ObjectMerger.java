@@ -17,7 +17,7 @@ public class ObjectMerger {
 
         var nullPropertyNames = getNullPropertyNames(source);
 
-        if (nullPropertyNames != null && nullPropertyNames.length > 0) {
+        if (nullPropertyNames != null) {
             BeanUtils.copyProperties(source, target, nullPropertyNames);
         }
     }
