@@ -7,6 +7,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -41,13 +42,18 @@ public class TaskServiceTest {
 
     private TaskModel createValidTask() {
         TaskModel task = new TaskModel();
-        task.setId(taskId);
-        task.setIdUser(userId);
         task.setTitle("Test Task");
         task.setDescription("Test Description");
         task.setStartAt(LocalDateTime.now().plusHours(1));
         task.setEndAt(LocalDateTime.now().plusHours(2));
         task.setPriority("High");
+        return task;
+    }
+
+    private TaskModel createTaskFromDatabase() {
+        TaskModel task = createValidTask();
+        task.setId(taskId);
+        task.setIdUser(userId);
         return task;
     }
 
@@ -92,8 +98,23 @@ public class TaskServiceTest {
     }
 
     @Test
+    void shouldListTasksByUserWithSuccess() {
+        TaskModel task1 = createTaskFromDatabase();
+        TaskModel task2 = createTaskFromDatabase();
+
+        when(taskRepository.findByIdUser(userId)).thenReturn(List.of(task1, task2));
+
+        List<TaskModel> result = taskService.listByUser(userId);
+
+        assertNotNull(result);
+        assertEquals(2, result.size());
+        assertEquals(task1.getTitle(), result.get(0).getTitle());
+        assertEquals(task2.getTitle(), result.get(1).getTitle());
+    }
+
+    @Test
     void shouldUpdateTaskWithSuccess() {
-        TaskModel taskInDb = createValidTask();
+        TaskModel taskInDb = createTaskFromDatabase();
         TaskModel updatedRequest = new TaskModel();
         updatedRequest.setTitle("New Title");
 
@@ -122,7 +143,7 @@ public class TaskServiceTest {
     void shouldThrowExceptionWhenUserNotAuthorized() {
         UUID unauthorizedUserId = UUID.randomUUID();
 
-        TaskModel taskInDb = createValidTask();
+        TaskModel taskInDb = createTaskFromDatabase();
 
         when(taskRepository.findById(taskId)).thenReturn(Optional.of(taskInDb));
 
